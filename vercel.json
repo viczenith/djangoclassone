@@ -1,13 +1,25 @@
 {
-    "builds": [{
-        "src": "djangoClass/wsgi.py",
-        "use": "@vercel/python",
-        "config": { "maxLambdaSize": "15mb", "runtime": "python3.9" }
-    }],
+    "version": 2,
+    "builds": [
+      {
+        "src": "djangoClass",
+        "use": "@vercel/static-build",
+        "config": { "your-config": "here" }
+      }
+    ],
     "routes": [
-        {
-            "src": "/(.*)",
-            "dest": "djangoClass/wsgi.py"
-        }
-    ]
-}
+      { "handle": "filesystem" },
+      { "src": "/.*", "dest": "/index.html" }
+    ],
+    "env": {
+      "PYTHON_VERSION": "3.9.18",
+      "DJANGO_SETTINGS_MODULE": "djangoClass.settings"
+    },
+    "functions": {
+      "api/*.py": {
+        "runtime": "python39",
+        "includeFiles": "djangoClass/**"
+      }
+    }
+  }
+  
